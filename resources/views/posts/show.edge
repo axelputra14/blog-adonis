@@ -1,6 +1,10 @@
 @layouts.app()
   <div class="container">
     <div>
+      @!link({
+        route: 'posts.index',
+        text: '&lsaquo; Go back to posts listing',
+      })
       <h1>{{ post.title }}</h1>
     </div>
 
@@ -13,6 +17,23 @@
       </div>
 
       <div class="post-summary">{{ post.summary }}</div>
+      <div class="post-actions">
+        {{-- Show edit button only to the post owner --}}
+        @can('PostPolicy.edit', post)
+          @!link({
+            route: 'posts.edit',
+            routeParams: post,
+            text: 'Edit post',
+          })
+        @end
+        {{-- Show delete button only to the post owner --}}
+        @can('PostPolicy.delete', post)
+          <span>.</span>
+          @form({ route: 'posts.destroy', routeParams: post, method: 'DELETE' })
+            @!button({ text: 'Delete', class: 'destructive' })
+          @end
+        @end
+      </div>
       <div class="post-comments">
         <h2>Comments</h2>
         @each(comment in post.comments)
@@ -24,10 +45,36 @@
               on
               {{ comment.createdAt.toFormat('MMM dd, yyyy') }}
             </div>
+            <div class="comment-actions">
+              @can('CommentPolicy.delete', comment)
+                @form({
+                  route: 'comments.destroy',
+                  routeParams: [comment.id],
+                  method: 'DELETE',
+                })
+                  @!button({ type: 'submit', text: 'Delete', class: 'destructive' })
+                @end
+              @end
+            </div>
           </div>
         @else
           <p>No comments yet.</p>
         @end
+
+        <div class="post-comment-form">
+          @form({ route: 'comments.store', routeParams: post, method: 'POST' })
+            <div>
+              @field.root({ name: 'content' })
+                @!textarea.control({ rows: 3, placeholder: 'Share your thoughts...' })
+                @!field.error()
+              @end
+            </div>
+
+            <div>
+              @!button({ text: 'Post comment', type: 'submit' })
+            </div>
+          @end
+        </div>
       </div>
     </div>
   </div>

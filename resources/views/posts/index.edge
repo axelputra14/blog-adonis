@@ -2,6 +2,11 @@
   <div class="container">
     <div class="posts-list-title">
       <h1>Posts</h1>
+      @!link({
+        text: 'Create new post',
+        route: 'posts.create',
+        class: 'button',
+      })
     </div>
     @each(post in posts)
       <div class="post-item">

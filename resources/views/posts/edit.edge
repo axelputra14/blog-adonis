@@ -1,0 +1,40 @@
+@layouts.app()
+  <div class="form-container">
+    @!link({
+      route: 'posts.show',
+      routeParams: post,
+      text: '&lsaquo; Back to post',
+    })
+
+    <h1>Edit Post</h1>
+    @form({ route: 'posts.update', routeParams: post, method: 'PUT' })
+      <div>
+        @field.root({ name: 'title' })
+          @!field.label({ text: 'Post title' })
+          @!input.control({ value: post.title })
+          @!field.error()
+        @end
+      </div>
+
+      <div>
+        @field.root({ name: 'url' })
+          @!field.label({ text: 'URL' })
+          @!input.control({ type: 'url', value: post.url })
+          @!field.error()
+        @end
+      </div>
+
+      <div>
+        @field.root({ name: 'summary' })
+          @!field.label({ text: 'Short summary' })
+          @!textarea.control({ rows: 4, value: post.summary })
+          @!field.error()
+        @end
+      </div>
+
+      <div>
+        @!button({ text: 'Update Post', type: 'submit' })
+      </div>
+    @end
+  </div>
+@end

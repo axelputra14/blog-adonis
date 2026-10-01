@@ -1,0 +1,50 @@
+@layouts.app()
+  <div class="form-container">
+    <div>
+      @!link({
+        route: 'posts.index',
+        text: '&lsaquo; Go back to posts listing',
+      })
+      <h1>Share your creation</h1>
+      <p>Share the URL and a short summary of your creation</p>
+    </div>
+
+    <div>
+      @form({ route: 'posts.store', method: 'POST' })
+        <div>
+          @field.root({ name: 'title' })
+            @!field.label({ text: 'Post title' })
+            @!input.control({ placeholder: 'Title of your creation' })
+            @!field.error()
+          @end
+        </div>
+
+        <div>
+          @field.root({ name: 'url' })
+            @!field.label({ text: 'URL' })
+            @!input.control({
+              type: 'url',
+              placeholder: 'https://example.com/my-creation',
+            })
+            @!field.error()
+          @end
+        </div>
+
+        <div>
+          @field.root({ name: 'summary' })
+            @!field.label({ text: 'Short summary' })
+            @!textarea.control({
+              rows: 4,
+              placeholder: 'Briefly describe what you are sharing',
+            })
+            @!field.error()
+          @end
+        </div>
+
+        <div>
+          @!button({ text: 'Publish', type: 'submit' })
+        </div>
+      @end
+    </div>
+  </div>
+@end

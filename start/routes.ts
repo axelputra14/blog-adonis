@@ -12,8 +12,19 @@ import { controllers } from '#generated/controllers'
 import router from '@adonisjs/core/services/router'
 
 router.on('/').render('pages/home').as('home')
+
+//posts routes
 router.get('/posts', [controllers.Posts, 'index'])
+router.get('/posts/create', [controllers.Posts, 'create']).use(middleware.auth())
+router.post('/posts', [controllers.Posts, 'store']).use(middleware.auth())
 router.get('/posts/:id', [controllers.Posts, 'show'])
+
+router.get('/posts/:id/edit', [controllers.Posts, 'edit']).use(middleware.auth())
+router.put('/posts/:id', [controllers.Posts, 'update']).use(middleware.auth())
+router.delete('/posts/:id', [controllers.Posts, 'destroy']).use(middleware.auth())
+//comments
+router.post('/posts/:id/comments', [controllers.Comments, 'store']).use(middleware.auth())
+router.delete('/comments/:id', [controllers.Comments, 'destroy']).use(middleware.auth())
 
 router
   .group(() => {

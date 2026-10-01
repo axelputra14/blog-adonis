@@ -1,0 +1,19 @@
+import type User from '#models/user'
+import type Post from '#models/post'
+import { BasePolicy } from '@adonisjs/bouncer'
+
+export default class PostPolicy extends BasePolicy {
+  /**
+   * Only the post owner can edit their post
+   */
+  edit(user: User, post: Post) {
+    return user.id === post.userId
+  }
+
+  /**
+   * Only the post owner can delete their post
+   */
+  delete(user: User, post: Post) {
+    return user.id === post.userId
+  }
+}
