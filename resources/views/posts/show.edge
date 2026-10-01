@@ -1,0 +1,34 @@
+@layouts.app()
+  <div class="container">
+    <div>
+      <h1>{{ post.title }}</h1>
+    </div>
+
+    <div class="post">
+      <div class="post-meta">
+        <div>By {{ post.user.fullName }}</div>
+
+        <span>.</span>
+        <div><a href="{{ post.url }}" target="_blank">{{ post.url }}</a></div>
+      </div>
+
+      <div class="post-summary">{{ post.summary }}</div>
+      <div class="post-comments">
+        <h2>Comments</h2>
+        @each(comment in post.comments)
+          <div class="comment-item">
+            <p>{{ comment.content }}</p>
+            <div class="comment-meta">
+              By
+              {{ comment.user.fullName }}
+              on
+              {{ comment.createdAt.toFormat('MMM dd, yyyy') }}
+            </div>
+          </div>
+        @else
+          <p>No comments yet.</p>
+        @end
+      </div>
+    </div>
+  </div>
+@end

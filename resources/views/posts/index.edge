@@ -1,0 +1,22 @@
+@layouts.app()
+  <div class="container">
+    <div class="posts-list-title">
+      <h1>Posts</h1>
+    </div>
+    @each(post in posts)
+      <div class="post-item">
+        <h2>{{ post.title }}</h2>
+
+        <div class="post-meta">
+          <div>By {{ post.user.fullName }}</div>
+
+          <span>.</span>
+          <div><a href="{{ post.url }}" target="_blank">{{ post.url }}</a></div>
+
+          <span>.</span>
+          <div><a href="{{ urlFor('posts.show', [post.id]) }}">View comments</a></div>
+        </div>
+      </div>
+    @end
+  </div>
+@end
